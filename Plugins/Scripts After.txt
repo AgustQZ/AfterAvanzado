@@ -1,0 +1,46 @@
+//Hacer que se repita en bucle un path
+valueAtTime(time % key(numKeys).time)
+
+
+_______________________________________________________________________________________
+// 
+//
+// Swing expression - Filip Vandueren
+//cree un nulo y agregar 2 slider control. nombrarlos "Rebotes" y "TimeOffset"
+//nota: cada slider debe ir de 0 a 100.
+swings=thisComp.layer("Animation Control").effect("Rebotes")("Slider")*0.5;
+timeOffset=thisComp.layer("Animation Control").effect("TimeOffset")("Slider");
+
+v=valueAtTime(time-timeOffset*textIndex/textTotal)[0];
+
+anim=2*Math.PI*v/100;
+amp=easeIn(v,0,100,100,0);
+Math.abs(Math.cos(anim*swings)*amp); 
+
+_______________________________________________________________________________________
+// Bounce Expression
+//
+
+speedScaler = thisComp.layer("Animation Control").effect("Speed")("Slider"); // animation speed
+indexOffset = textIndex /( 0.1 + thisComp.layer("Animation Control").effect("Index Offset")("Slider")); // use to alter letter offset; use a very large number eg 10000 to group all the letters together
+startFrame = thisComp.layer("Animation Control").effect("Start Frame")("Slider"); // when the animation starts
+amplitude = thisComp.layer("Animation Control").effect("Amplitude")("Slider"); // height of the bounces
+decayRate = thisComp.layer("Animation Control").effect("Decay Rate")("Slider"); // how quickly the bouncing stops
+
+
+if ( ( time/thisComp.frameDuration ) >= startFrame ){ 
+x = (time * speedScaler) - indexOffset;
+s = amplitude * Math.abs( ( Math.pow(Math.E, -x * decayRate))*(Math.cos(x * Math.PI) ) );
+
+
+if (s < 0.15) {
+	s = 0;
+    }
+}
+else {
+	
+s = 0;
+}
+[s,s];
+
+
